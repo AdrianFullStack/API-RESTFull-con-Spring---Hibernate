@@ -16,7 +16,7 @@ import com.example.demo.model.UserModel;
 import com.example.demo.repository.UserRepository;
 
 @Service("userService")
-public class UserService {
+public class UserService{
 	@Autowired
 	@Qualifier("userRepository")
 	private UserRepository userRepository;

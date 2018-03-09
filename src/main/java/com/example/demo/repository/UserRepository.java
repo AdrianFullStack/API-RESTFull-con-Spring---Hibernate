@@ -1,7 +1,6 @@
 package com.example.demo.repository;
 
 import java.io.Serializable;
-import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +16,7 @@ public interface UserRepository extends JpaRepository<User, Serializable>,
 	
 	public abstract User findById(long id);
 	
-	public abstract List<User> findByEmail(String email);
+	public abstract User findByEmail(String email);
 	
 	public abstract Page<User> findAll(Pageable pageable);
 }
