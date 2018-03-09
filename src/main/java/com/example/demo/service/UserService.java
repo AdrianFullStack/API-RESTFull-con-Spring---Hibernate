@@ -2,8 +2,11 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -18,16 +21,20 @@ public class UserService {
 	@Qualifier("userRepository")
 	private UserRepository userRepository;
 	
+	private static final Log logger = LogFactory.getLog(UserService.class);
+	
 	@Autowired
 	@Qualifier("converter")
 	private Converter converter;
 	
 	public boolean create(User user) {
+		logger.info("Creando Usuario");
 		try {
 			userRepository.save(user);
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
+			logger.error("Error al crear usuario: " + e.getMessage());
 			return false;
 		}
 	}
@@ -56,5 +63,13 @@ public class UserService {
 	
 	public List<UserModel> all() {			
 		return converter.coverterList(userRepository.findAll());
+	}
+	
+	public User find(long user_id) {
+		return userRepository.findOne(user_id);
+	}
+	
+	public List<UserModel> pagination(Pageable pageable){
+		return converter.coverterList(userRepository.findAll(pageable).getContent());
 	}
 }
